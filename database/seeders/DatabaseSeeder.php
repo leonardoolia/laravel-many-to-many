@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(TypeSeeder::class);
+        $this->call(TechnologySeeder::class);
         // \App\Models\User::factory(10)->create();
         \App\Models\Project::factory(10)->create();
 
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'Leonardo',
-            'email' => 'leonardo@esempio.it',
+            'email' => 'leonardo@esempio2.it',
         ]);
     }
 }

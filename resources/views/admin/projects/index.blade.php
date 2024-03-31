@@ -17,6 +17,7 @@
         <th scope="col">Titolo</th>
         <th scope="col">Descrizione</th>
         <th scope="col">Tag</th>
+        <th scope="col">Tecnologie</th>
         <th scope="col">Data di inizio</th>
         <th scope="col">Data di fine</th>
         <th scope="col">Status</th>
@@ -41,6 +42,13 @@
               @else 
                 -
               @endif              
+            </td>
+            <td>    
+              @if($project->technology)
+                {{$project->technology->label}}
+              @else 
+                -
+              @endif
             </td>
             <td>{{$project->start_date}}</td>
             <td>{{$project->end_date}}</td>           

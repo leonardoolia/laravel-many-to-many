@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,9 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderByDesc('created_at')->paginate(10);
-        return view('admin.projects.index', compact('projects'));
+        // Recupera tutte le tecnologie per tutti i progetti
+        $technologies = Technology::all();
+        return view('admin.projects.index', compact('projects', 'technologies'));
     }
 
     /**
