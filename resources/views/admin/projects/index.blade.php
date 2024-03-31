@@ -43,12 +43,14 @@
                 -
               @endif              
             </td>
-            <td>    
-              @if($project->technology)
-                {{$project->technology->label}}
-              @else 
-                -
-              @endif
+            <td>  
+              
+                @forelse ($technologies as $technology)
+                  {{$technology->label}}
+                @empty
+                  -
+                @endforelse
+            
             </td>
             <td>{{$project->start_date}}</td>
             <td>{{$project->end_date}}</td>           

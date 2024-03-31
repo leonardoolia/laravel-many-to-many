@@ -21,8 +21,8 @@ class ProjectController extends Controller
     {
         $projects = Project::orderByDesc('created_at')->paginate(10);
         // Recupera tutte le tecnologie per tutti i progetti
-        $technologies = Technology::all();
-        return view('admin.projects.index', compact('projects', 'technologies'));
+        $technology = Technology::all();
+        return view('admin.projects.index', compact('projects', 'technology'));
     }
 
     /**
@@ -32,7 +32,8 @@ class ProjectController extends Controller
     {
         $project = new Project(); //creiamo un progetto fittizio per unire i form dell'edit e del create
         $types = Type::select('label', 'id')->get();
-        return view('admin.projects.create', compact('project', 'types'));
+        $technology = Technology::select('label', 'id')->get();
+        return view('admin.projects.create', compact('project', 'types', 'technology'));
     }
 
     /**
@@ -51,6 +52,7 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'status' => 'required|string',
+            'technologies' => 'nullable|exists:technologies'
         ], [
             'title.required' => 'Il titolo è obbligatorio',
             'title.min' => 'Il titolo deve essere di almeno :min caratteri',
@@ -62,7 +64,8 @@ class ProjectController extends Controller
             'image.image' => 'Il file inserito non è un\'immagine',
             'image.mimes' => 'Le estensioni accettate sono .png e .jpg',
             'status.required' => 'Lo status è obbligatorio',
-            'end_date.after' => 'La data di fine deve essere successiva alla data di inizio'
+            'end_date.after' => 'La data di fine deve essere successiva alla data di inizio',
+            'technologies.exists' => 'Tecnologia non valida'
         ]);
 
 
@@ -121,6 +124,7 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'status' => 'required|string',
+            'technologies' => 'nullable|exists:technologies'
         ], [
             'title.required' => 'Il titolo è obbligatorio',
             'title.min' => 'Il titolo deve essere di almeno :min caratteri',
@@ -131,7 +135,8 @@ class ProjectController extends Controller
             'image.image' => 'Il file inserito non è un\'immagine',
             'image.mimes' => 'Le estensioni accettate sono .png e .jpg',
             'status.required' => 'Lo status è obbligatorio',
-            'end_date.after' => 'La data di fine deve essere successiva alla data di inizio'
+            'end_date.after' => 'La data di fine deve essere successiva alla data di inizio',
+            'technologies.exists' => 'Tecnologia non valida'
         ]);
 
         $data = $request->all();
